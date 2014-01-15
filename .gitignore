@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <assert.h>
+#ifndef __A1_MAP_H__
+#define __A1_MAP_H__
+
+
+typedef struct _map_entry map_entry_t;
+struct _map_entry {
+	char* key;
+	char* value;
+	map_entry_t* next;
+};
+
+typedef struct _map {
+	map_entry_t* entry;
+	int size;
+} map_t;
+
+// Part one functions.
+void map_init(map_t*);
+int map_put(map_t*, const char*, const char*);
+const char* map_get(map_t*, const char*);
+int map_remove(map_t*, const char*);
+int map_size(map_t*);
+void map_destroy(map_t*);
+
+// Part two functions. 
+//int map_serialize(map_t*, FILE*);
+//int map_deserialize(map_t*, FILE*);
+
+#endif
+
+int main(int argc, char **argv)
+{
+	map_t* my_map;
+	
+	map_init(my_map);
+	
+	map_put(my_map, "rofl", "copter");
+	map_put(my_map, "copter", "rofl");
+	
+	printf("%s\n", map_get(my_map, "rofl"));
+	
+	map_remove(my_map, "rofl");
+	
+	printf("%s\n", map_get(my_map, "rofl"));
+	
+	map_destroy(my_map);
+	
+	return 0;
+}
+
+void map_init(map_t* self) {
+	self = NULL;
+	
+}
+
+int map_put(map_t* self, const char* key, const char* val) {
+	assert(self != NULL);
+
+	
+	
+	return 0;
+}
+
+const char* map_get(map_t* self, const char* key) {
+	assert(self != NULL);
+	return 0;
+}
+
+int map_size(map_t* self) {
+	assert(self != NULL);
+	return 0;
+}
+
+int map_remove(map_t* self, const char* key) {
+	assert(self != NULL);
+	return 0;
+}
+
+/*int map_serialize(map_t* self, FILE* stream) {
+  assert(self != NULL);
+
+}
+
+int map_deserialize(map_t* self, FILE* stream) {
+  assert(self != NULL);
+  
+}*/
+
+void map_destroy(map_t* self) {
+  assert(self != NULL);
+  
+}
