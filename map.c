@@ -1,3 +1,8 @@
+// Taylor Fry
+// CS2240 1:00pm
+// Assignment 1
+// January 16, 2014
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,11 +42,11 @@ int map_put(map_t* self, const char* key, const char* val) {
 	newNode = malloc(sizeof(map_entry_t));
 	
 	// Allocating memory for the key and value for newNode
-	newNode->key = strcpy(malloc(strlen(key)), key);
-	newNode->value = strcpy(malloc(strlen(val)), val);
+	newNode->key = strncpy(malloc(strlen(key)+1), key, 20);
+	newNode->value = strncpy(malloc(strlen(val)+1), val, 20);
 
 	// Pointer returns to the beginning of the list
-	newNode->next = self->entry; // not sure about error, but it runs correctly
+	newNode->next = self->entry; // not sure about warning
 	self->entry = newNode;
 	self->size++;
 
@@ -61,7 +66,7 @@ const char* map_get(map_t* self, const char* key) {
 	// If it does not match, search moves on to the next node.
 	// If search moves completely through the link list, it returns NULL.
 	while(search != NULL) {
-		if(strcmp(search->key, key) == 0)
+		if(strncmp(search->key, key, 20) == 0)
 			return search->value;		
 		else	
 			search = (map_entry_t*)search->next;
@@ -81,7 +86,7 @@ int map_size(map_t* self) {
 	// printing out the key and value of each node as it goes.  
 	while(search != NULL) {
 		printf("Key: %s Value: %s\n", search->key, search->value);
-		search = (map_entry_t*) search->next;
+		search = (map_entry_t*)search->next;
 	}
 	return self->size;
 }
@@ -104,7 +109,7 @@ int map_remove(map_t* self, const char* key) {
 	// Not matching moves nextNode forward, while freeing search.
 	// Returns 0 if successful, 1 if not.
 	while(search != NULL) {
-		if(strcmp(search->key, key) == 0) {
+		if(strncmp(search->key, key, 20) == 0) {
 			if(&(*self->entry) == &(*search)) {
 				self->entry = (map_entry_t*)search->next;
 				free(search->key);
@@ -139,10 +144,28 @@ void map_destroy(map_t* self) {
 	// search moves through the link list freeing the memory of key, 
 	// value, and the node itself.  Then moves to the next node.
 	while(self->entry != NULL) {
-		self->entry = (map_entry_t*) self->entry->next;
+		self->entry = (map_entry_t*)self->entry->next;
 		free(search->key);
 		free(search->value);
 		free(search);
 		search = self->entry;
 	}
+}
+
+int map_serialize(map_t* self, FILE* stream) {
+	assert(self != NULL);
+	
+	map_entry_t* buff;
+	
+	buff = self->entry;
+	
+	fwrite(&buff, 1024, sizeof(buff), stream);
+	
+	return 0;
+}
+
+int map_deserialize(map_t* self, FILE* stream) {
+	assert(self != NULL);
+	
+	return 0;
 }
