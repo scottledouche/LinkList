@@ -1,8 +1,3 @@
-// Taylor Fry
-// CS2240 1:00pm
-// Assignment 1
-// January 16, 2014
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
